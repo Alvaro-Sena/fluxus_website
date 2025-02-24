@@ -1,0 +1,125 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <h3 class="text-center">Sign Up</h3>
+        <form action="/register" method="post" class="form-register">
+            <div class="form-group">
+                <input autocomplete="off" autofocus class="form-control" name="username" id="username" placeholder="Username" type="text" required>
+                <small id="username-feedback" class="form-text text-muted"></small>
+            </div>
+            <div class="form-group">
+                <input class="form-control" name="full_name" placeholder="Full Name" type="text" required>
+            </div>
+            <div class="form-group">
+                <input class="form-control" name="email" placeholder="Email" type="email" required>
+            </div>
+            <div class="form-group">
+                <input class="form-control" list="country-list" name="country" placeholder="Country" type="text" required>
+                <datalist id="country-list">
+                    <!-- Os países serão preenchidos dinamicamente com a API -->
+                </datalist>
+            </div>
+            
+            <!-- Instrução de senha antes dos campos de senha -->
+            <div class="form-group">
+                <small id="password-instruction" class="form-text text-muted">
+                    Password must be at least 8 characters, including letters and numbers.
+                </small>
+            </div>
+
+            <div class="form-group">
+                <input class="form-control" name="password" id="password" placeholder="Password" type="password" required>
+                <small id="password-feedback" class="form-text text-muted"></small>
+            </div>
+            <div class="form-group">
+                <input class="form-control" name="confirmation" id="confirmation" placeholder="Password" type="password" required>
+                <small id="confirmation-feedback" class="form-text text-muted"></small>
+            </div>
+            <button class="btn btn-primary btn-block" type="submit" id="submit-btn" disabled>Register</button>
+        </form>
+    </div>
+
+    <script>
+        // Função para verificar a disponibilidade do nome de usuário em tempo real
+        document.getElementById("username").addEventListener("input", function () {
+            let username = this.value.toLowerCase();  // Convertendo para minúsculas
+            this.value = username;  // Atualizando o campo de entrada com o nome de usuário em minúsculas
+            let feedback = document.getElementById("username-feedback");
+            if (username) {
+                fetch("/check_username", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ username: username }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.available) {
+                        feedback.textContent = "Username is available.";
+                        feedback.style.color = "green";
+                    } else {
+                        feedback.textContent = data.message;
+                        feedback.style.color = "red";
+                    }
+                });
+            } else {
+                feedback.textContent = "";
+            }
+        });
+
+        // Carregar a lista de países
+        fetch("https://restcountries.com/v3.1/all")
+            .then(response => response.json())
+            .then(data => {
+                const countryList = document.getElementById("country-list");
+                data.forEach(country => {
+                    const option = document.createElement("option");
+                    option.value = country.name.common; // Nome do país em inglês
+                    countryList.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error("Error fetching country data:", error);
+            });
+
+        // Validação de senha
+        document.getElementById("password").addEventListener("input", function () {
+            let password = this.value;
+            let feedback = document.getElementById("password-feedback");
+            const regex = /^(?=.*[a-zA-Z])(?=.*\d).{8,}$/;  // Deve ter letras e números e no mínimo 8 caracteres
+            if (password.length < 8) {
+                feedback.textContent = "Password must be at least 8 characters.";
+                feedback.style.color = "red";
+            } else if (!regex.test(password)) {
+                feedback.textContent = "Password must include letters and numbers.";
+                feedback.style.color = "red";
+            } else {
+                feedback.textContent = "Password is valid.";
+                feedback.style.color = "green";
+            }
+        });
+
+        // Validação de confirmação de senha
+        document.getElementById("confirmation").addEventListener("input", function () {
+            let password = document.getElementById("password").value;
+            let confirmation = this.value;
+            let feedback = document.getElementById("confirmation-feedback");
+            if (password === confirmation) {
+                feedback.textContent = "Passwords match.";
+                feedback.style.color = "green";
+                document.getElementById("submit-btn").disabled = false;  // Habilitar o botão de envio
+            } else {
+                feedback.textContent = "Passwords do not match.";
+                feedback.style.color = "red";
+                document.getElementById("submit-btn").disabled = true;  // Desabilitar o botão de envio
+            }
+        });
+    </script>
+
+{% endblock %}

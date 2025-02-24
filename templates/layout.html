@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<style>
+    .title-banner {
+        background-image: url('{{ url_for("static", filename="images/banner.jpg") }}');
+        background-size: cover;
+        background-position: center;
+        width: 100%;
+        padding: 20px 0; /* Ajuste o padding conforme necessário para controlar a altura */
+        text-align: center;
+    }
+    
+    .title-banner h1 {
+        color: white; /* Garante que o texto seja visível */
+        margin: 0;
+        font-size: 2.5rem;
+        text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5); /* Dá destaque ao texto */
+    }
+
+    .contact-container {
+        padding: 20px;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .contact-box {
+        background-color: #f9f9f9;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .contact-box h2, .contact-box h4 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+        color: #333;
+    }
+
+    .contact-box p {
+        font-size: 1rem;
+        line-height: 1.6;
+        color: #555;
+    }
+
+    .contact-box a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .contact-box a:hover {
+        text-decoration: underline;
+    }
+
+    .contact-box .icon-text {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
+    .contact-box .icon-text h4 {
+        margin: 0;
+    }
+
+    .support-container {
+        margin: 20px auto;
+        max-width: 800px;
+        padding: 20px;
+    }
+
+    .support-box {
+        background-color: #f8f9fa; /* Fundo cinza claro */
+        border-radius: 10px; /* Bordas arredondadas */
+        padding: 20px; /* Espaçamento interno */
+        margin-bottom: 20px; /* Espaçamento entre as caixas */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    }
+
+    .support-box h2 {
+        font-size: 1.5rem;
+        color: #343a40;
+        margin-bottom: 15px;
+    }
+
+    .support-box p {
+        font-size: 1rem;
+        color: #495057;
+        margin-bottom: 10px;
+    }
+
+    .bank-details p {
+        margin: 0;
+    }
+
+    .bank-details {
+        background-color: #e9ecef; /* Fundo ligeiramente mais escuro para os detalhes bancários */
+        border-radius: 8px;
+        padding: 10px;
+        margin-top: 10px;
+    }
+
+    a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+</style>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- Favicon -->
+    <link href="/static/favicon.ico" rel="icon">
+
+    <!-- Custom Styles -->
+    <link href="/static/styles.css" rel="stylesheet">
+
+    <title>Casa Fluxus {% block title %}{% endblock %}</title>
+</head>
+
+<body>
+
+    <nav class="bg-light border navbar navbar-expand-md navbar-light">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <img src="/static/logo.png" alt="Logo Casa Fluxus" class="me-2" style="height: 1.5rem;"> 
+                <span style="color:rgb(31, 54, 38);">Casa </span><span style="color:rgb(67, 125, 86);">Fluxus</span>
+            </a>
+            <button aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#navbar" data-bs-toggle="collapse" type="button">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbar">
+                <ul class="navbar-nav me-auto mt-2">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/about">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/projects">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/support">Support Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/contact">Contact Us</a></li>
+                </ul>
+                {% if session["user_id"] %}
+                    <ul class="navbar-nav ms-auto mt-2">
+                        <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
+                    </ul>
+                {% else %}
+                    <ul class="navbar-nav ms-auto mt-2">
+                        <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/login">Log In</a></li>
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    {% if get_flashed_messages() %}
+        <header>
+            <div class="alert alert-primary mb-0 text-center" role="alert">
+                {{ get_flashed_messages() | join(" ") }}
+            </div>
+        </header>
+    {% endif %}
+
+    <main class="main-content container py-5 text-center">
+        {% block main %}{% endblock %}
+    </main>
+
+    <footer class="footer d-flex align-items-center justify-content-between">
+        <!-- Nome "Casa Fluxus" no footer -->
+        <div class="footer-brand">
+            <span class="fw-bold" style="font-size: 1.5rem;">Casa Fluxus</span>
+        </div>
+
+        <!-- Links de navegação próximos ao nome, em duas linhas -->
+        <div class="footer-links">
+            <ul class="list-unstyled d-flex flex-wrap mb-0">
+                <li><a href="/" class="text-white text-decoration-none mx-2">Home</a></li>
+                <li><a href="/about" class="text-white text-decoration-none mx-2">About Us</a></li>
+                <li><a href="/projects" class="text-white text-decoration-none mx-2">Projects</a></li>
+                <li><a href="/support" class="text-white text-decoration-none mx-2">Support Us</a></li>
+                <li><a href="/contact" class="text-white text-decoration-none mx-2">Contact Us</a></li>
+                <li><a href="/register" class="text-white text-decoration-none mx-2">Register</a></li>
+                <li><a href="/login" class="text-white text-decoration-none mx-2">Login</a></li>
+            </ul>
+        </div>
+
+        <!-- Informações do desenvolvedor à direita -->
+        <div class="footer-developer">
+            <p class="mb-1">&copy; 2024 Álvaro Sena</p>
+            <div class="footer-icons">
+                <a href="https://wa.me/447345040385" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://linkedin.com/in/alvaro-sena" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/Alvaro-Sena" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="mailto:alvaroabsael@gmail.com" target="_blank"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

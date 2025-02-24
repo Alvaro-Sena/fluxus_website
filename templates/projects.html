@@ -1,0 +1,89 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Projects
+{% endblock %}
+
+{% block main %}
+
+<div class="title-banner">
+    <h1 class="display-4 text-center fw-bold text-white">Projects</h1>
+</div>
+
+<div class="projects-container">
+    <!-- Project 1 -->
+    <div class="project-box">
+        <h2>Sewing Circles</h2>
+        <div class="project-gallery">
+            <button class="prev-btn" onclick="changeSlide(0, -1)">&#10094;</button>
+            <div class="slide-container">
+                <img src="{{ url_for('static', filename='images/project1-image1.jpg') }}" alt="Project 1 Image" class="project-image active">
+                <img src="{{ url_for('static', filename='images/project1-image2.jpg') }}" alt="Project 1 Image" class="project-image">
+                <img src="{{ url_for('static', filename='images/project1-image3.jpg') }}" alt="Project 1 Image" class="project-image">
+            </div>
+            <button class="next-btn" onclick="changeSlide(0, 1)">&#10095;</button>
+        </div>
+        <p class="project-summary">We develop sewing skills as we mend our damaged garments.</p>
+    </div>
+
+    <!-- Project 2 -->
+    <div class="project-box">
+        <h2>Portuguese Language Circle</h2>
+        <div class="project-gallery">
+            <button class="prev-btn" onclick="changeSlide(1, -1)">&#10094;</button>
+            <div class="slide-container">
+                <img src="{{ url_for('static', filename='images/project2-image1.jpg') }}" alt="Project 2 Image" class="project-image active">
+                <img src="{{ url_for('static', filename='images/project2-image2.jpg') }}" alt="Project 2 Image" class="project-image">
+                <img src="{{ url_for('static', filename='images/project2-image3.jpg') }}" alt="Project 2 Image" class="project-image">
+            </div>
+            <button class="next-btn" onclick="changeSlide(1, 1)">&#10095;</button>
+        </div>
+        <p class="project-summary">We develop Portuguese language speaking skills for foreigners.</p>
+    </div>
+
+    <!-- Project 3 -->
+    <div class="project-box">
+        <h2>Sustainable Planting</h2>
+        <div class="project-gallery">
+            <button class="prev-btn" onclick="changeSlide(2, -1)">&#10094;</button>
+            <div class="slide-container">
+                <img src="{{ url_for('static', filename='images/project3-image1.jpg') }}" alt="Project 3 Image" class="project-image active">
+                <img src="{{ url_for('static', filename='images/project3-image2.jpg') }}" alt="Project 3 Image" class="project-image">
+                <img src="{{ url_for('static', filename='images/project3-image3.jpg') }}" alt="Project 3 Image" class="project-image">
+            </div>
+            <button class="next-btn" onclick="changeSlide(2, 1)">&#10095;</button>
+        </div>
+        <p class="project-summary">We teach how to prepare the soil sustainably for successful planting.</p>
+    </div>
+
+    <!-- Project 4 -->
+    <div class="project-box">
+        <h2>Cinefluxos: Tela e Pensamentos</h2>
+        <div class="project-gallery">
+            <button class="prev-btn" onclick="changeSlide(3, -1)">&#10094;</button>
+            <div class="slide-container">
+                <img src="{{ url_for('static', filename='images/project4-image1.jpg') }}" alt="Project 4 Image" class="project-image active">
+                <img src="{{ url_for('static', filename='images/project4-image2.jpg') }}" alt="Project 4 Image" class="project-image">
+                <img src="{{ url_for('static', filename='images/project4-image3.jpg') }}" alt="Project 4 Image" class="project-image">
+            </div>
+            <button class="next-btn" onclick="changeSlide(3, 1)">&#10095;</button>
+        </div>
+        <p class="project-summary">We watched a movie of great intellectual value together and discussed it.</p>
+    </div>
+</div>
+
+<script>
+    // JavaScript for gallery navigation
+    let slideIndices = [0, 0, 0, 0]; // Stores the current image index for each project
+
+    function changeSlide(projectIndex, step) {
+        const slides = document.querySelectorAll(`.project-box:nth-child(${projectIndex + 1}) .project-image`);
+        slideIndices[projectIndex] = (slideIndices[projectIndex] + step + slides.length) % slides.length;
+        
+        slides.forEach((slide, index) => {
+            slide.classList.toggle('active', index === slideIndices[projectIndex]);
+        });
+    }
+</script>
+
+{% endblock %}

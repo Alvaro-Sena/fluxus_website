@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Support Us
+{% endblock %}
+
+{% block main %}
+
+
+<div class="title-banner">
+    <h1 class="display-4 text-center fw-bold text-white">Support Us</h1>
+</div>
+
+<div class="support-container">
+    <p>Help us by showing support through registering and sharing your experience with Casa Fluxus.</p>
+
+    {% if not session.get("user_id") %}
+        <!-- Caixa para novos usuários pedindo registro ou login -->
+        <div class="support-box">
+            <h2>Join Our Community</h2>
+            <p>To connect with us and stay updated, you can:</p>
+            <p>
+                <a href="/register">Create an account</a> if you’re new here, or 
+                <a href="/login">log in</a> if you already have an account.
+            </p>
+            <p>Help us by showing support through registering and sharing <a href="/about">here </a>your experience with Casa Fluxus.</p>
+        </div>
+
+        <!-- Caixa para doação para novos usuários -->
+        <div class="support-box">
+            <h2>Donate to Support Casa Fluxus</h2>
+            <p>You can support us by making a bank transfer to:</p>
+            <div class="bank-details">
+                <p><strong>Bank:</strong> Bank X</p>
+                <p><strong>Branch:</strong> 11111-11</p>
+                <p><strong>Account:</strong> 2222222-2</p>
+            </div>
+            <p>Or by following the link: <a href="https://teste.com.br" target="_blank">Donate Here</a></p>
+        </div>
+    {% else %}
+        <!-- Caixa apenas para doação para usuários registrados -->
+        <div class="support-box">
+            <h2>Thank You for Being a Member!</h2>
+            <p>Continue to support us by making a bank transfer to:</p>
+            <div class="bank-details">
+                <p><strong>Bank:</strong> Bank X</p>
+                <p><strong>Branch:</strong> X</p>
+                <p><strong>Account:</strong> X</p>
+            </div>
+            <p>Or by following the link: <a href="https://teste.com.br" target="_blank">Donate Here</a></p>
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}

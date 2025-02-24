@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    About Us
+{% endblock %}
+
+{% block main %}
+
+    <div class="title-banner">
+        <h1 class="display-4 text-center fw-bold text-white">About Us</h1>
+    </div>
+
+    <p class="text-justify lead">Welcome to Casa Fluxus! We are a collaborative and eco-friendly nomadic base, offering accommodation in exchange for volunteer work such as cooking, helping with activities, and collaborating on environmental preservation projects. We host community activities, like sewing cycles and Portuguese language classes, with a focus on collective well-being and non-profit values. Come explore our space and <a href="/projects">projects</a>, contribute your energy, and share experiences with us!</p>
+
+    <!-- Comentários dos Usuários -->
+    <section class="mt-5">
+        <h2 class="mb-4">Comments about Casa Fluxus</h2>
+
+        <!-- Formulário de comentário (visível apenas para usuários logados) -->
+        {% if session["user_id"] %}
+            <form action="/about" method="post" class="mb-4">
+                <textarea name="message" class="form-control mb-2" placeholder="Share your thoughts about Casa Fluxus" required></textarea>
+                <button type="submit" class="btn btn-primary">Post Comment</button>
+            </form>
+        {% else %}
+            <p>Please <a href="/login">log in</a> to post a comment.</p>
+        {% endif %}
+
+        <div class="row">
+            <!-- Exibir comentários -->
+            {% for comment in comments %}
+                <div class="col-md-6 mb-4">
+                    <div class="p-3" style="background-color: #f8f9fa; border-radius: 5px;">
+                        <strong class="d-block mb-2 text-start" style="color: #2c3e50;">{{ comment['username'] }}</strong>
+                        <p class="mb-1 text-start">{{ comment['message'] }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+{% endblock %}
