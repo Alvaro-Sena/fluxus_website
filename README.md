@@ -25,7 +25,7 @@ Para dar vida a este projeto, foram utilizadas diversas tecnologias:
   - **Google Maps** para exibição da localização física do projeto.  
 
 ---
-### **Como visualizar o website**###
+### **Como visualizar o website**
 
 1. Clone o repositório:  
    ```bash
@@ -92,3 +92,5 @@ Para dar vida a este projeto, foram utilizadas diversas tecnologias:
 
 ---
 
+### Contato
+Caso tenha dúvidas ou sugestões, entre em contato através do meu [LinkedIn](www.linkedin.com/in/alvaro-sena), [GitHub](https://github.com/Alvaro-Sena) ou [WhatsApp](https://wa.me/447356040385).
